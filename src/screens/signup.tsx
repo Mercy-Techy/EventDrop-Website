@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router";
+import { Link } from "react-router";
 import PasswordInput from "../components/ui/passwordInput";
 import { useEffect, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
@@ -6,9 +6,11 @@ import { signUp, type CustomError } from "../api/auth";
 import { toast } from "sonner";
 import CheckBox from "../components/ui/checkbox";
 import { ClipLoader } from "react-spinners";
+import Verification from "../components/functions/verification";
 
 const SignUp = () => {
   const [buttonDisabled, setButtonDisable] = useState(true);
+  const [isComplete, setIsComplete] = useState(false);
   const [userDetails, setUserDetails] = useState({
     firstname: "",
     lastname: "",
@@ -27,7 +29,6 @@ const SignUp = () => {
 
   const textChange = (name: string, value: string) =>
     setUserDetails((state) => ({ ...state, [name]: value }));
-  const navigate = useNavigate();
   const { mutate, isPending } = useMutation({ mutationFn: signUp });
 
   const signUpHandler = () => {
@@ -39,15 +40,14 @@ const SignUp = () => {
             input === "firstname"
               ? "first name"
               : input === "lastname"
-              ? "last name"
-              : input
-          } is required`
+                ? "last name"
+                : input
+          } is required`,
         );
     }
     mutate(details, {
       onSuccess: () => {
-        // toast.success("Welcome to EventDrop");
-        // return navigate("/dashboard");
+        setIsComplete(true);
       },
       onError: (data: CustomError) =>
         toast.error(data?.response?.data?.message || data?.message),
@@ -61,7 +61,7 @@ const SignUp = () => {
       if (input === "password") {
         const strongPasswordRegex =
           /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/.test(
-            userDetails.password
+            userDetails.password,
           );
 
         if (!strongPasswordRegex) return setButtonDisable(true);
@@ -72,6 +72,13 @@ const SignUp = () => {
 
   return (
     <div className="md:flex h-full">
+      {isComplete && (
+        <Verification
+          type="email"
+          onComplete={() => setIsComplete(false)}
+          email={userDetails.email}
+        />
+      )}
       <div className="hidden md:block md:w-1/3 lg:w-1/2 relative">
         <img
           src="./auth.png"
