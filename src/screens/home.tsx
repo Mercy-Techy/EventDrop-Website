@@ -6,12 +6,37 @@ import { MdSecurity } from "react-icons/md";
 import { RiMenu2Fill } from "react-icons/ri";
 import { TbCurrencyNaira } from "react-icons/tb";
 import { Link } from "react-router";
+import * as motion from "motion/react-client";
+import Masonry from "../components/ui/masonry";
+
+export const photos = [
+  "/p12.jfif",
+  "/p11.jfif",
+  "/p10.jfif",
+  "/p9.jfif",
+  "/p8.jfif",
+  "/p7.jfif",
+  "/p6.jfif",
+  "/p5.jfif",
+  "/p4.jfif",
+  "/p3.jfif",
+  "/p2.jfif",
+  "/p1.jfif",
+];
 
 const Home = () => {
   const [show, setShow] = useState(false);
   return (
     <div className="font-nunito">
-      <nav className="fixed shadow bg-[#F5EDE0] p-4 md:px-16 w-full lg:flex justify-between items-center">
+      <motion.div
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{
+          duration: 0.8,
+          ease: "easeOut",
+        }}
+        className="fixed shadow bg-black text-white p-4 md:px-16 w-full lg:flex justify-between items-center"
+      >
         {show && (
           <div className="flex justify-end text-2xl">
             <IoMdClose onClick={() => setShow(false)} />
@@ -24,7 +49,7 @@ const Home = () => {
                 <RiMenu2Fill onClick={() => setShow(true)} />
               </div>
             )}
-            <div className="text-[#D97A5B] font-bold text-3xl font-pacific ">
+            <div className="text-yellow-300 font-bold text-3xl font-pacific ">
               EventDrop
             </div>
           </div>
@@ -42,7 +67,7 @@ const Home = () => {
           <li>
             <Link to="/login">Log in</Link>
           </li>
-          <li className="bg-[#D97A5B] text-white px-4 py-2 rounded-lg">
+          <li className="bg-pink-700 text-white px-4 py-2 rounded-lg">
             <Link to="/signup">Sign up</Link>
           </li>
         </ul>
@@ -60,15 +85,23 @@ const Home = () => {
             <li className="mb-5 lg:mb-0">
               <Link to="/login">Log in</Link>
             </li>
-            <li className="bg-[#D97A5B] text-white px-4 py-2 rounded-lg w-1/2 md:w-1/3 lg:w-full">
+            <li className="bg-pink-700 text-white px-4 py-2 rounded-lg w-1/2 md:w-1/3 lg:w-full">
               <Link to="/signup">Sign up</Link>
             </li>
           </ul>
         )}
-      </nav>
-      <main className="py-20 px-10 md:px-20 lg:px-40">
+      </motion.div>
+      <main className="bg-black text-white py-20 px-10 md:px-20 lg:px-40">
         <div>
-          <div className="lg:flex gap-16 w-full my-10">
+          <motion.div
+            initial={{ y: -100 }}
+            animate={{ y: 0 }}
+            transition={{
+              duration: 0.8,
+              ease: "easeOut",
+            }}
+            className="gap-16 w-full my-10 flex justify-center"
+          >
             <div className="w-full lg:w-1/2 text-center">
               <h1 className="text-4xl md:text-6xl font-bold">
                 Your event happened once. The memories shouldn’t be scattered.
@@ -81,26 +114,30 @@ const Home = () => {
                 revisit anytime.
               </div>
             </div>
-            <img
-              src="/phone.png"
-              alt=""
-              className="w-full lg:w-1/3 rounded-lg mt-5 lg:mt-0"
-            />
-          </div>
+          </motion.div>
 
           <section id="features" className="my-20">
-            <h1 className="text-center text-4xl font-bold font-pacific text-[#D97A5B]">
-              Why Choose EventDrop
+            <h1 className="text-center text-4xl font-bold font-pacific text-white">
+              Why Choose <span className="text-yellow-300">EventDrop</span>
             </h1>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-10">
-              <div className="flex flex-col items-center">
-                <div className="text-[#D97A5B] bg-[#D97A5B]/10 w-14 h-14 flex justify-center items-center rounded-full">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.5 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{
+                duration: 0.8,
+                scale: { type: "spring", visualDuration: 0.8, bounce: 0 },
+              }}
+              viewport={{ once: true }}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-10"
+            >
+              <div className="flex flex-col items-center bg-neutral-900 shadow-2xl p-6 rounded-lg">
+                <div className="text-green-500 bg-green-500/10 w-14 h-14 flex justify-center items-center rounded-full">
                   <FaLink className="text-xl" />
                 </div>
                 <h2 className="font-bold text-lg my-4">
                   No App or Account Required
                 </h2>
-                <p className="text-center">
+                <p>
                   Your guests can upload photos instantly using the generated
                   link - no app downloads, no sign-ups. They simply click the
                   link, upload their photos, view other event photos uploaded by
@@ -108,26 +145,26 @@ const Home = () => {
                   guests who don't want to install another app on their phone.
                 </p>
               </div>
-              <div className="flex flex-col items-center">
-                <div className="text-[#D97A5B] bg-[#D97A5B]/10 w-14 h-14 flex justify-center items-center rounded-full">
+              <div className="flex flex-col items-center bg-neutral-900 shadow-2xl p-6 rounded-lg">
+                <div className="text-green-500 bg-green-500/10 w-14 h-14 flex justify-center items-center rounded-full">
                   <CiImageOn className="text-xl font-bold" />
                 </div>
                 <h2 className="font-bold text-lg my-4">
                   Original Quality Photos
                 </h2>
-                <p className="text-center">
+                <p>
                   Unlike messaging apps that compress images, EventDrop
                   preserves full resolution and quality. Your wedding photos,
                   vacation memories, and party pictures are stored and shared
                   exactly as they were captured – no quality loss.
                 </p>
               </div>
-              <div className="flex flex-col items-center">
-                <div className="text-[#D97A5B] bg-[#D97A5B]/10 w-14 h-14 flex justify-center items-center rounded-full">
+              <div className="flex flex-col items-center bg-neutral-900 shadow-2xl p-6 rounded-lg">
+                <div className="text-green-500 bg-green-500/10 w-14 h-14 flex justify-center items-center rounded-full">
                   <MdSecurity className="text-xl" />
                 </div>
                 <h2 className="font-bold text-lg my-4">Private and Secure</h2>
-                <p className="text-center">
+                <p>
                   Your event photos are completely private and secure. Only
                   people with your unique link can upload or view photos. No
                   social media sharing, no public galleries – just you and your
@@ -135,69 +172,28 @@ const Home = () => {
                   your gallery.
                 </p>
               </div>
-            </div>
-            <div className="mt-20">
+            </motion.div>
+            <div className="mt-20 ">
               <h1 className="mb-8 text-center text-4xl font-bold ">
                 Perfect for Every Type of Celebration
               </h1>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
-                <div className="w-full bg-[#F5EDE0] shadow rounded-lg">
-                  <img
-                    src="/p6.jfif"
-                    alt=""
-                    className="h-80 w-full rounded-t-lg"
-                  />
-                  <p className=" p-4 text-lg">Wedding Ceremony</p>
-                </div>
-                <div className="w-full bg-[#F5EDE0] shadow rounded-lg">
-                  <img
-                    src="/p5.jfif"
-                    alt=""
-                    className="h-80 w-full rounded-t-lg"
-                  />
-                  <p className=" p-4 text-lg">Baby Shower</p>
-                </div>
-                <div className="w-full bg-[#F5EDE0] shadow rounded-lg">
-                  <img
-                    src="/p4.jfif"
-                    alt=""
-                    className="h-80 w-full rounded-t-lg"
-                  />
-                  <p className=" p-4 text-lg">Birthday</p>
-                </div>
-                <div className="w-full bg-[#F5EDE0] shadow rounded-lg">
-                  <img
-                    src="/p3.jfif"
-                    alt=""
-                    className="h-80 w-full rounded-t-lg"
-                  />
-                  <p className=" p-4 text-lg">Briday Shower</p>
-                </div>
-                <div className="w-full bg-[#F5EDE0] shadow rounded-lg">
-                  <img
-                    src="/p2.jfif"
-                    alt=""
-                    className="h-80 w-full rounded-t-lg"
-                  />
-                  <p className=" p-4 text-lg">Graduation</p>
-                </div>
-                <div className="w-full bg-[#F5EDE0] shadow rounded-lg">
-                  <img
-                    src="/p1.jfif"
-                    alt=""
-                    className="h-80 w-full rounded-t-lg"
-                  />
-                  <p className=" p-4 text-lg">Picnic</p>
-                </div>
-              </div>
+              <Masonry images={photos} />
             </div>
           </section>
 
           <section id="how">
             <h1 className="text-center text-4xl font-bold ">How It Works</h1>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-8">
+            <motion.div
+              initial={{ y: 100 }}
+              whileInView={{ y: 0 }}
+              transition={{
+                duration: 0.5,
+              }}
+              viewport={{ once: true }}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-8"
+            >
               <div className="flex flex-col items-center">
-                <div className="text-white bg-[#D97A5B] w-10 h-10 flex justify-center items-center rounded-full">
+                <div className="text-pink-700 bg-pink-700/30 w-10 h-10 flex justify-center items-center rounded-full">
                   <span className="font-bold">1</span>
                 </div>
                 <h2 className="font-bold text-lg my-4">Create Event</h2>
@@ -208,7 +204,7 @@ const Home = () => {
                 </p>
               </div>
               <div className="flex flex-col items-center">
-                <div className="text-white bg-[#D97A5B] w-10 h-10 flex justify-center items-center rounded-full">
+                <div className="text-pink-700 bg-pink-700/30 w-10 h-10 flex justify-center items-center rounded-full">
                   <span className="font-bold">2</span>
                 </div>
                 <h2 className="font-bold text-lg my-4">Share the Link</h2>
@@ -218,7 +214,7 @@ const Home = () => {
                 </p>
               </div>
               <div className="flex flex-col items-center">
-                <div className="text-white bg-[#D97A5B] w-10 h-10 flex justify-center items-center rounded-full">
+                <div className="text-pink-700 bg-pink-700/30 w-10 h-10 flex justify-center items-center rounded-full">
                   <span className="font-bold">3</span>
                 </div>
                 <h2 className="font-bold text-lg my-4">Collect Memories</h2>
@@ -227,78 +223,88 @@ const Home = () => {
                   and download their favorites.
                 </p>
               </div>
-            </div>
+            </motion.div>
           </section>
 
           <section id="pricing">
             <h1 className="text-center text-4xl font-bold mt-20">Pricing</h1>
           </section>
           <div className="md:flex w-full gap-20 justify-center mt-10">
-            <div className="w-full md:w-1/2 lg:w-1/3 border rounded-md border-[#D97A5B] px-10 py-4">
-              <div className="border-b border-[#D97A5B] py-4 flex flex-col items-center">
+            <div className="w-full md:w-1/2 lg:w-1/3 px-10 py-4 bg-neutral-900 shadow-2xl rounded-lg">
+              <div className="border-b border-green-500 py-4 flex flex-col items-center">
                 <p className="text-xl font-bold">Free</p>
-                <p className="flex items-center text-3xl font-bold text-[#D97A5B]">
+                <p className="flex items-center text-3xl font-bold text-green-500">
                   <TbCurrencyNaira /> <span>0</span>
                 </p>
                 <p className="text-sm text-stone-500">Free Forever</p>
               </div>
               <ul className="mt-8">
                 <li className="flex items-center gap-2 mb-4">
-                  <IoMdCheckmark className="text-[#D97A5B] font-bold text-xl" />{" "}
+                  <IoMdCheckmark className="text-white font-bold text-xl" />{" "}
                   <span>Full Platform Access</span>
                 </li>
                 <li className="flex items-center gap-2 mb-4">
-                  <IoMdCheckmark className="text-[#D97A5B] font-bold text-xl" />{" "}
+                  <IoMdCheckmark className="text-white font-bold text-xl" />{" "}
                   <span>Unlimited photos per event</span>
                 </li>
                 <li className="flex items-center gap-2 mb-4">
-                  <IoMdCheckmark className="text-[#D97A5B] font-bold text-xl" />{" "}
+                  <IoMdCheckmark className="text-white font-bold text-xl" />{" "}
                   <span>Unlimited events</span>
                 </li>
                 <li className="flex items-center gap-2 mb-4">
-                  <IoMdCheckmark className="text-[#D97A5B] font-bold text-xl" />{" "}
+                  <IoMdCheckmark className="text-white font-bold text-xl" />{" "}
                   <span>30 days retention per event</span>
                 </li>
                 <li className="flex items-center gap-2 mb-4">
-                  <IoMdCheckmark className="text-[#D97A5B] font-bold text-xl" />{" "}
+                  <IoMdCheckmark className="text-white font-bold text-xl" />{" "}
                   <span>Unlimited number of guest</span>
                 </li>
                 <li className="flex items-center gap-2 mb-4">
-                  <IoMdCheckmark className="text-[#D97A5B] font-bold text-xl" />{" "}
+                  <IoMdCheckmark className="text-white font-bold text-xl" />{" "}
                   <span>Upgrade anytime</span>
                 </li>
               </ul>
+              <div className="flex justify-center mt-6">
+                <button className="bg-green-500/10 text-green-500 w-1/2 py-4 rounded-4xl">
+                  <Link to="/signup">Get Started</Link>
+                </button>
+              </div>
             </div>
-            <div className="mt-8 md:mt-0 w-full md:w-1/2 lg:w-1/3 border rounded-md border-[#D97A5B] px-10 py-4">
-              <div className="border-b border-[#D97A5B] py-4 flex flex-col items-center">
+            <div className="mt-8 md:mt-0 w-full md:w-1/2 lg:w-1/3 px-10 py-4 bg-neutral-900 shadow-2xl rounded-lg">
+              <div className="border-b border-green-500 py-4 flex flex-col items-center">
                 <p className="text-xl font-bold">Premium</p>
-                <p className="flex items-center text-3xl font-bold text-[#D97A5B]">
+                <p className="flex items-center text-3xl font-bold text-green-500">
                   <TbCurrencyNaira /> <span>1000</span>
                 </p>
                 <p className="text-sm text-stone-500">Per Month</p>
               </div>
               <ul className="mt-8">
                 <li className="flex items-center gap-2 mb-4">
-                  <IoMdCheckmark className="text-[#D97A5B] font-bold text-xl" />{" "}
+                  <IoMdCheckmark className="text-white font-bold text-xl" />{" "}
                   <span>Full Platform Access</span>
                 </li>
                 <li className="flex items-center gap-2 mb-4">
-                  <IoMdCheckmark className="text-[#D97A5B] font-bold text-xl" />{" "}
+                  <IoMdCheckmark className="text-white font-bold text-xl" />{" "}
                   <span>Unlimited photos per event</span>
                 </li>
                 <li className="flex items-center gap-2 mb-4">
-                  <IoMdCheckmark className="text-[#D97A5B] font-bold text-xl" />{" "}
+                  <IoMdCheckmark className="text-white font-bold text-xl" />{" "}
                   <span>Unlimited events</span>
                 </li>
                 <li className="flex items-center gap-2 mb-4">
-                  <IoMdCheckmark className="text-[#D97A5B] font-bold text-xl" />{" "}
+                  <IoMdCheckmark className="text-white font-bold text-xl" />{" "}
                   <span>Events retained forever</span>
                 </li>
                 <li className="flex items-center gap-2 mb-4">
-                  <IoMdCheckmark className="text-[#D97A5B] font-bold text-xl" />{" "}
+                  <IoMdCheckmark className="text-white font-bold text-xl" />{" "}
                   <span>Unlimited number of guest</span>
                 </li>
               </ul>
+              <div className="flex justify-center mt-[60px]">
+                <button className="bg-green-500/10 text-green-500 w-1/2 py-4 rounded-4xl">
+                  <Link to="/signup">Get Started</Link>
+                </button>
+              </div>
             </div>
           </div>
         </div>

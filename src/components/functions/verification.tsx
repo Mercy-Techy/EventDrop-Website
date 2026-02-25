@@ -36,6 +36,8 @@ const Verification = ({
       onComplete();
       return navigate("/login");
     },
+    onError: (data: CustomError) =>
+      toast.error(data?.response?.data?.message || data?.message),
   });
   const { mutate: resendMutate, isPending: resetPending } = useMutation({
     mutationFn: type === "email" ? resendEmailToken : requestPasswordReset,
@@ -100,15 +102,15 @@ const Verification = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-[#F5EDE0] p-6 rounded-md text-center mx-10 w-full md:w-2/3 lg:w-1/2">
+    <div className="fixed inset-0 bg-black/50 bg-opacity-50 flex items-center justify-center z-60">
+      <div className="bg-black text-white p-6 rounded-md text-center mx-10 w-full md:w-2/3 lg:w-1/2">
         <div className="flex justify-end">
           <IoClose className="text-4xl" onClick={onComplete} />
         </div>
         <h1 className="text-2xl">
           {type === "email" ? "Verify Your Email" : "Reset Your Password"}
         </h1>
-        <p className="text-sm text-[#D97A5B]">
+        <p className="text-sm">
           A code has been sent to your mail to{" "}
           {type === "email" ? "verify your email" : "reset your password"}
         </p>
@@ -129,8 +131,8 @@ const Verification = ({
               className="
         w-14 h-16
         text-center text-lg font-semibold
-        border-2 border-[#D97A5B] rounded-lg
-        focus:outline-none focus:ring-2 focus:ring-[#D97A5B]
+        border-2 border-yellow-300 rounded-lg
+        focus:outline-none focus:ring-2 focus:ring-yellow-300
       "
             />
           ))}
@@ -140,9 +142,7 @@ const Verification = ({
             disabled={otp.length !== length}
             onClick={() => mutate({ token: otp.join(""), password: "" })}
             type="button"
-            className={`text-white font-bold py-3 rounded-lg w-full md:w-2/3 lg:w-1/2 mt-10 ${
-              otp.length !== length ? "bg-[#D97A5B]/50" : "bg-[#D97A5B]"
-            }`}
+            className={`font-bold py-3 rounded-lg w-2/3 lg:w-1/2 mt-10 bg-yellow-300/10 text-yellow-300`}
           >
             {isPending && otp.length === length ? (
               <ClipLoader color="white" size={21} />

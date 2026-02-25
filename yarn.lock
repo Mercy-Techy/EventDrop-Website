@@ -1689,6 +1689,15 @@ form-data@^4.0.4:
     hasown "^2.0.2"
     mime-types "^2.1.12"
 
+framer-motion@^12.34.3:
+  version "12.34.3"
+  resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-12.34.3.tgz#946f716bfef710d564bf721f4f364274f6278fd4"
+  integrity sha512-v81ecyZKYO/DfpTwHivqkxSUBzvceOpoI+wLfgCgoUIKxlFKEXdg0oR9imxwXumT4SFy8vRk9xzJ5l3/Du/55Q==
+  dependencies:
+    motion-dom "^12.34.3"
+    motion-utils "^12.29.2"
+    tslib "^2.4.0"
+
 fs-minipass@^3.0.0, fs-minipass@^3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/fs-minipass/-/fs-minipass-3.0.3.tgz#79a85981c4dc120065e96f62086bf6f9dc26cc54"
@@ -2344,6 +2353,26 @@ minizlib@^3.0.1, minizlib@^3.1.0:
   dependencies:
     minipass "^7.1.2"
 
+motion-dom@^12.34.3:
+  version "12.34.3"
+  resolved "https://registry.yarnpkg.com/motion-dom/-/motion-dom-12.34.3.tgz#56224109a20bf2cb38277bfaedeeda5151ce369d"
+  integrity sha512-sYgFe+pR9aIM7o4fhs2aXtOI+oqlUd33N9Yoxcgo1Fv7M20sRkHtCmzE/VRNIcq7uNJ+qio+Xubt1FXH3pQ+eQ==
+  dependencies:
+    motion-utils "^12.29.2"
+
+motion-utils@^12.29.2:
+  version "12.29.2"
+  resolved "https://registry.yarnpkg.com/motion-utils/-/motion-utils-12.29.2.tgz#8fdd28babe042c2456b078ab33b32daa3bf5938b"
+  integrity sha512-G3kc34H2cX2gI63RqU+cZq+zWRRPSsNIOjpdl9TN4AQwC4sgwYPl/Q/Obf/d53nOm569T0fYK+tcoSV50BWx8A==
+
+motion@^12.34.3:
+  version "12.34.3"
+  resolved "https://registry.yarnpkg.com/motion/-/motion-12.34.3.tgz#365a8ca9c0748e00ff3917b0f6b08a8aac90676c"
+  integrity sha512-xZIkBGO7v/Uvm+EyaqYd+9IpXu0sZqLywVlGdCFrrMiaO9JI4Kx51mO9KlHSWwll+gZUVY5OJsWgYI5FywJ/tw==
+  dependencies:
+    framer-motion "^12.34.3"
+    tslib "^2.4.0"
+
 ms@^2.1.2, ms@^2.1.3:
   version "2.1.3"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.3.tgz#574c8138ce1d2b5861f0b44579dbadd60c6615b2"
@@ -2734,6 +2763,11 @@ react-icons@^5.5.0:
   version "5.5.0"
   resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-5.5.0.tgz#8aa25d3543ff84231685d3331164c00299cdfaf2"
   integrity sha512-MEFcXdkP3dLo8uumGI5xN3lDFNsRtrjbOEKDLD7yv76v4wpnEq2Lt2qeHaQOr34I/wPN3s3+N08WkQ+CW37Xiw==
+
+react-photo-album@^3.5.1:
+  version "3.5.1"
+  resolved "https://registry.yarnpkg.com/react-photo-album/-/react-photo-album-3.5.1.tgz#3a6ec40bd87568a3f6fa04fa3693024535bb9234"
+  integrity sha512-g1uFG+loxdIb8eIOGnrh/71Ao80+XWV+NLfluY9qDDTbS76m+X1K6dpfNtsx1xKr9aw5N1ornkFTWpfyqOoD5Q==
 
 react-refresh@^0.18.0:
   version "0.18.0"

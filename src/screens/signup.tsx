@@ -7,6 +7,8 @@ import { toast } from "sonner";
 import CheckBox from "../components/ui/checkbox";
 import { ClipLoader } from "react-spinners";
 import Verification from "../components/functions/verification";
+import Masonry from "../components/ui/masonry";
+import { photos } from "./home";
 
 const SignUp = () => {
   const [buttonDisabled, setButtonDisable] = useState(true);
@@ -71,7 +73,7 @@ const SignUp = () => {
   }, [userDetails]);
 
   return (
-    <div className="md:flex h-full">
+    <div className="md:flex h-full bg-white">
       {isComplete && (
         <Verification
           type="email"
@@ -79,16 +81,15 @@ const SignUp = () => {
           email={userDetails.email}
         />
       )}
-      <div className="hidden md:block md:w-1/3 lg:w-1/2 relative">
-        <img
-          src="./auth.png"
-          alt="image"
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-[#D97A5B]/40 mix-blend-overlay"></div>
+      <div className="hidden md:block md:w-2/3 relative">
+        <div className="absolute inset-0 bg-black/50 bg-opacity-50 z-40"></div>
+        <h1 className="text-yellow-300/80 font-bold text-9xl font-pacific absolute inset-0 flex mt-48 justify-center z-50">
+          EventDrop
+        </h1>
+        <Masonry images={photos} />
       </div>
-      <form className="bg-[#F5EDE0] w-full md:2/3 lg:w-1/2 py-10 px-8 lg:px-16">
-        <div className="text-[#D97A5B] font-bold text-3xl font-pacific text-center">
+      <form className="bg-white w-full md:2/3 lg:w-1/2 py-10 px-8 lg:px-16">
+        <div className="text-black font-bold text-3xl font-pacific text-center">
           Sign Up
         </div>
         <div className="my-10">
@@ -98,7 +99,7 @@ const SignUp = () => {
             </label>
             <input
               type="text"
-              className="bg-white px-2 py-3 outline-none rounded-md w-full"
+              className="bg-white border border-black px-2 py-3 outline-none rounded-md w-full"
               placeholder="first name"
               value={userDetails.firstname}
               name="firstname"
@@ -111,7 +112,7 @@ const SignUp = () => {
             </label>
             <input
               type="text"
-              className="bg-white px-2 py-3 outline-none rounded-md w-full"
+              className="bg-white border border-black px-2 py-3 outline-none rounded-md w-full"
               placeholder="last name"
               value={userDetails.lastname}
               name="lastname"
@@ -124,7 +125,7 @@ const SignUp = () => {
             </label>
             <input
               type="email"
-              className="bg-white px-2 py-3 outline-none rounded-md w-full"
+              className="bg-white border border-black px-2 py-3 outline-none rounded-md w-full"
               placeholder="email"
               value={userDetails.email}
               name="email"
@@ -133,7 +134,7 @@ const SignUp = () => {
           </div>
           <PasswordInput
             className="mt-6 flex flex-col gap-1"
-            inputClassName="bg-white px-2 py-3 rounded-md"
+            inputClassName="bg-white border border-black px-2 py-3 outline-none rounded-md w-full"
             labelClassname="font-semibold"
             label="Password"
             value={userDetails.password}
@@ -167,9 +168,7 @@ const SignUp = () => {
             disabled={buttonDisabled}
             onClick={signUpHandler}
             type="button"
-            className={`text-white font-bold py-3 rounded-lg w-full ${
-              buttonDisabled ? "bg-[#D97A5B]/50" : "bg-[#D97A5B]"
-            }`}
+            className={`text-white font-bold py-3 rounded-lg w-full bg-black`}
           >
             {isPending && !buttonDisabled ? (
               <ClipLoader color="white" size={21} />
