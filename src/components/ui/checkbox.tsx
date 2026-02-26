@@ -1,12 +1,18 @@
-const CheckBox = ({ label, valid }: { label: string; valid: boolean }) => {
+const CheckBox = ({
+  label,
+  valid,
+  color,
+}: {
+  label: string;
+  valid: boolean;
+  color?: string;
+}) => {
+  const bg = color ? `bg-${color}` : "bg-green-500";
+  const text = color ? `text-${color}` : "text-green-500";
   return (
     <div className="flex items-center gap-2">
-      <div
-        className={`h-3 w-3 rounded-full ${valid ? "bg-yellow-300" : "bg-gray-300"}`}
-      />
-      <span className={`${valid ? "text-black" : "text-gray-600"}`}>
-        {label}
-      </span>
+      <div className={`h-3 w-3 rounded-full ${valid ? bg : "bg-gray-300"}`} />
+      <span className={`${valid ? text : "text-gray-600"}`}>{label}</span>
     </div>
   );
 };

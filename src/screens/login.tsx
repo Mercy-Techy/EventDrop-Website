@@ -38,16 +38,16 @@ const Login = () => {
     });
   };
   return (
-    <div className="md:flex h-full bg-white">
-      <div className="hidden md:block md:w-2/3 relative">
+    <div className="md:flex bg-black">
+      <div className="hidden md:block md:w-1/2 lg:w-2/3 relative">
         <div className="absolute inset-0 bg-black/50 bg-opacity-50 z-40"></div>
-        <h1 className="text-yellow-300/80 font-bold text-9xl font-pacific absolute inset-0 flex mt-48 justify-center z-50">
+        <h1 className="text-yellow-300/80 font-bold text-7xl lg:text-9xl font-pacific absolute inset-0 flex mt-48 justify-center z-50">
           EventDrop
         </h1>
-        <Masonry images={photos} />
+        <Masonry images={[...photos.slice(0, 9)]} />
       </div>
-      <form className="bg-white w-full md:2/3 lg:w-1/2 py-10 px-8 lg:px-16">
-        <div className="text-black font-bold text-3xl font-pacific text-center">
+      <form className="w-full md:w-1/2 py-10 px-8  text-white">
+        <div className="font-bold text-3xl font-pacific text-center">
           Log In
         </div>
         <div className="my-10">
@@ -57,7 +57,7 @@ const Login = () => {
             </label>
             <input
               type="email"
-              className="bg-white border border-black px-2 py-3 outline-none rounded-md w-full"
+              className="bg-neutral-900 px-2 py-3 outline-none rounded-md w-full"
               placeholder="email"
               name="email"
               onChange={(e) => textChange("email", e.target.value)}
@@ -65,7 +65,7 @@ const Login = () => {
           </div>
           <PasswordInput
             className="mt-6 flex flex-col gap-1"
-            inputClassName="bg-white border border-black px-2 py-3 outline-none rounded-md w-full"
+            inputClassName="bg-neutral-900 px-2 py-3 outline-none rounded-md w-full"
             labelClassname="font-semibold"
             label="Password"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -77,7 +77,7 @@ const Login = () => {
           <button
             type="button"
             onClick={logInHandler}
-            className="text-white font-bold py-3 rounded-lg w-full bg-black"
+            className="text-yellow-300 font-bold py-3 rounded-lg w-full bg-yellow-300/10 "
           >
             {isPending && !buttonDisabled ? (
               <ClipLoader color="white" size={21} />
@@ -87,7 +87,7 @@ const Login = () => {
           </button>
           <div className="text-sm text-center mt-2">
             Do not have an account?{" "}
-            <Link to="/signup" className="underline">
+            <Link to="/signup" className="underline text-yellow-300">
               Sign Up
             </Link>
           </div>
