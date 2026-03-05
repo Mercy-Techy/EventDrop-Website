@@ -7,8 +7,10 @@ import { toast } from "sonner";
 import { ClipLoader } from "react-spinners";
 import Masonry from "../components/ui/masonry";
 import { photos } from "./home";
+import { useAuth } from "../context/authcontext";
 
 const Login = () => {
+  const { logIn: login } = useAuth();
   const [userDetails, setUserDetails] = useState({
     email: "",
     password: "",
@@ -29,7 +31,8 @@ const Login = () => {
     if (!userDetails.email || !userDetails.password)
       return toast.error("A valid email and password is required");
     mutate(userDetails, {
-      onSuccess: () => {
+      onSuccess: (data) => {
+        login(data.data.user, data.data.token);
         toast.success("Welcome to EventDrop");
         return navigate("/dashboard");
       },
