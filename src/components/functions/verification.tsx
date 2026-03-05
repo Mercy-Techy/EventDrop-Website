@@ -39,7 +39,7 @@ const Verification = ({
     onError: (data: CustomError) =>
       toast.error(data?.response?.data?.message || data?.message),
   });
-  const { mutate: resendMutate, isPending: resetPending } = useMutation({
+  const { mutate: resendMutate } = useMutation({
     mutationFn: type === "email" ? resendEmailToken : requestPasswordReset,
     onSuccess: (data) => {
       toast.success(data.message);
