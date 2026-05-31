@@ -4,3 +4,11 @@
     --font-pacific:"Pacifico", "cursive";
     --font-nunito: "Nunito", sans-serif;
 }
+
+body input{
+    outline: none;
+}
+
+body textarea{
+    outline: none;
+}

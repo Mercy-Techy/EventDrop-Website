@@ -11,6 +11,8 @@ import {
 } from "../../api/auth";
 import { toast } from "sonner";
 import { useNavigate } from "react-router";
+import PasswordInput from "../ui/passwordInput";
+import CheckBox from "../ui/checkbox";
 
 const Verification = ({
   type,
@@ -28,6 +30,16 @@ const Verification = ({
   const [timeLeft, setTimeLeft] = useState<number>(120);
   const [canResend, setCanResend] = useState<boolean>(false);
   const navigate = useNavigate();
+  const [psword, showPsword] = useState<boolean>(false);
+  const [passwords, setPasswords] = useState({ password: "", confirm: "" });
+
+  const checks = {
+    upper: /[A-Z]/.test(passwords.password),
+    lower: /[a-z]/.test(passwords.password),
+    number: /[0-9]/.test(passwords.password),
+    special: /[^A-Za-z0-9]/.test(passwords.password),
+    length: passwords.password.length >= 8,
+  };
 
   const { mutate, isPending } = useMutation({
     mutationFn: type === "email" ? verifyEmail : resetPassword,
@@ -65,6 +77,25 @@ const Verification = ({
 
     return () => clearInterval(timer);
   }, [timeLeft]);
+
+  const handleVerify = () => {
+    if (type === "email") {
+      return mutate({ token: otp.join(""), password: "" });
+    }
+    showPsword(true);
+  };
+  const handleReset = () => {
+    const { confirm, password } = passwords;
+
+    const strongPasswordRegex =
+      /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/.test(password);
+
+    if (!strongPasswordRegex)
+      return toast.error("Password is not strong enough");
+
+    if (confirm !== password) return toast.error("Passwords do not match");
+    mutate({ password, token: otp.join("") });
+  };
 
   const handleChange = (value: string, index: number) => {
     if (!/^\d?$/.test(value)) return;
@@ -107,76 +138,136 @@ const Verification = ({
         <div className="flex justify-end">
           <IoClose className="text-4xl" onClick={onComplete} />
         </div>
-        <h1 className="text-2xl">
-          {type === "email" ? "Verify Your Email" : "Reset Your Password"}
-        </h1>
-        <p className="text-sm">
-          A code has been sent to your mail to{" "}
-          {type === "email" ? "verify your email" : "reset your password"}
-        </p>
-        <div className="flex gap-3 justify-center mt-10">
-          {otp.map((digit, index) => (
-            <input
-              key={index}
-              ref={(el) => {
-                inputsRef.current[index] = el;
-              }}
-              type="text"
-              inputMode="numeric"
-              maxLength={1}
-              value={digit}
-              onChange={(e) => handleChange(e.target.value, index)}
-              onKeyDown={(e) => handleKeyDown(e, index)}
-              onPaste={handlePaste}
-              className="
+        {!psword && (
+          <div>
+            <h1 className="text-2xl">
+              {type === "email" ? "Verify Your Email" : "Reset Your Password"}
+            </h1>
+            <p className="text-sm">
+              A code has been sent to your mail to{" "}
+              {type === "email" ? "verify your email" : "reset your password"}
+            </p>
+            <div className="flex gap-3 justify-center mt-10">
+              {otp.map((digit, index) => (
+                <input
+                  key={index}
+                  ref={(el) => {
+                    inputsRef.current[index] = el;
+                  }}
+                  type="text"
+                  inputMode="numeric"
+                  maxLength={1}
+                  value={digit}
+                  onChange={(e) => handleChange(e.target.value, index)}
+                  onKeyDown={(e) => handleKeyDown(e, index)}
+                  onPaste={handlePaste}
+                  className="
         w-14 h-16
         text-center text-lg font-semibold
         border-2 border-yellow-300 rounded-lg
         focus:outline-none focus:ring-2 focus:ring-yellow-300
       "
-            />
-          ))}
-        </div>
-        <div>
-          <button
-            disabled={otp.length !== length}
-            onClick={() => mutate({ token: otp.join(""), password: "" })}
-            type="button"
-            className={`font-bold py-3 rounded-lg w-2/3 lg:w-1/2 mt-10 bg-yellow-300/10 text-yellow-300`}
-          >
-            {isPending && otp.length === length ? (
-              <ClipLoader color="white" size={21} />
-            ) : (
-              "Submit"
-            )}
-          </button>
-        </div>
+                />
+              ))}
+            </div>
+            <div>
+              <button
+                disabled={otp.length !== length}
+                onClick={handleVerify}
+                type="button"
+                className={`font-bold py-3 rounded-lg w-2/3 lg:w-1/2 mt-10 bg-yellow-300/10 text-yellow-300`}
+              >
+                {isPending && otp.length === length ? (
+                  <ClipLoader color="white" size={21} />
+                ) : (
+                  "Submit"
+                )}
+              </button>
+            </div>
 
-        <div className="mt-2">
-          Didn't get the token,{" "}
-          {timeLeft > 0 && !canResend && (
-            <span>
-              resend in{" "}
-              {timeLeft > 60
-                ? `${Math.trunc(timeLeft / 60)} minutes, ${timeLeft % 60} seconds`
-                : `${timeLeft} seconds`}
-            </span>
-          )}
-          {timeLeft == 0 && canResend && (
-            <span>
-              {true ? (
-                <BeatLoader size={10} />
-              ) : (
-                <button
-                  onClick={() => resendMutate(email)}
-                  className="underline"
-                >
-                  resend
-                </button>
+            <div className="mt-2">
+              Didn't get the token,{" "}
+              {timeLeft > 0 && !canResend && (
+                <span>
+                  resend in{" "}
+                  {timeLeft > 60
+                    ? `${Math.trunc(timeLeft / 60)} minutes, ${timeLeft % 60} seconds`
+                    : `${timeLeft} seconds`}
+                </span>
               )}
-            </span>
-          )}
-        </div>
+              {timeLeft == 0 && canResend && (
+                <span>
+                  {true ? (
+                    <BeatLoader size={10} />
+                  ) : (
+                    <button
+                      onClick={() => resendMutate(email)}
+                      className="underline"
+                    >
+                      resend
+                    </button>
+                  )}
+                </span>
+              )}
+            </div>
+          </div>
+        )}
+        {psword && (
+          <div className="text-start md:mx-10">
+            <h1 className="text-2xl">New Password</h1>
+
+            <PasswordInput
+              className="mt-6 flex flex-col gap-1"
+              inputClassName="bg-neutral-900 px-2 py-3 outline-none rounded-md w-full"
+              labelClassname="font-semibold"
+              label="Password"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setPasswords((state) => ({
+                  ...state,
+                  password: e.target.value,
+                }))
+              }
+            />
+            <div className="mt-3 space-y-1 text-sm">
+              <CheckBox
+                label="At least one uppercase letter (A–Z)"
+                valid={checks.upper}
+              />
+              <CheckBox
+                label="At least one lowercase letter (a–z)"
+                valid={checks.lower}
+              />
+              <CheckBox label="Contains a number (0–9)" valid={checks.number} />
+              <CheckBox
+                label="Contains a special character (! @ # $ % ...)"
+                valid={checks.special}
+              />
+              <CheckBox
+                label="At least 8 characters long"
+                valid={checks.length}
+              />
+            </div>
+            <PasswordInput
+              className="mt-6 flex flex-col gap-1"
+              inputClassName="bg-neutral-900 px-2 py-3 outline-none rounded-md w-full"
+              labelClassname="font-semibold"
+              label="Confirm Password"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setPasswords((state) => ({ ...state, confirm: e.target.value }))
+              }
+            />
+            <div>
+              <button
+                disabled={isPending}
+                onClick={handleReset}
+                type="button"
+                className={`font-bold py-3 rounded-lg w-full mt-10 bg-yellow-300/10 text-yellow-300`}
+              >
+                {isPending ? <ClipLoader color="white" size={21} /> : "Submit"}
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

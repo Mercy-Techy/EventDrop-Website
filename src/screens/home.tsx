@@ -5,9 +5,10 @@ import { IoMdCheckmark, IoMdClose } from "react-icons/io";
 import { MdSecurity } from "react-icons/md";
 import { RiMenu2Fill } from "react-icons/ri";
 import { TbCurrencyNaira } from "react-icons/tb";
-import { Link } from "react-router";
+import { Link, Navigate } from "react-router";
 import * as motion from "motion/react-client";
 import Masonry from "../components/ui/masonry";
+import { useAuth } from "../context/authcontext";
 
 export const photos = [
   "/p12.jfif",
@@ -26,6 +27,10 @@ export const photos = [
 
 const Home = () => {
   const [show, setShow] = useState(false);
+  const { isAuth } = useAuth();
+  if (isAuth) {
+    return <Navigate to="/dashboard" replace />;
+  }
   return (
     <div className="font-nunito">
       <motion.div

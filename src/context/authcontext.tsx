@@ -5,31 +5,42 @@ interface AuthContextType {
   user: any;
   isAuth: boolean;
   logIn: (userDetails: any, token: string) => void;
+  logOut: () => void;
 }
 
-const AuthContext = createContext<AuthContextType>({
-  token: null,
-  user: null,
-  isAuth: false,
-  logIn: () => {},
-});
+const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
-  const [token, setToken] = useState<string | null>(null);
-  const [user, setUser] = useState<any>(null);
-  const [isAuth, setIsAuth] = useState<boolean>(false);
+  const [user, setUser] = useState(() =>
+    JSON.parse(localStorage.getItem("user") || "null"),
+  );
+  const [token, setToken] = useState(() => localStorage.getItem("token"));
 
   const logIn = (userDetails: any, tk: string) => {
-    setIsAuth(true);
-    setUser(userDetails);
     setToken(tk);
+    setUser(userDetails);
+    localStorage.setItem("token", tk);
+    localStorage.setItem("user", JSON.stringify(userDetails));
+  };
+
+  const logOut = () => {
+    setToken(null);
+    setUser(null);
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
   };
 
   return (
-    <AuthContext.Provider value={{ token, user, isAuth, logIn }}>
+    <AuthContext.Provider
+      value={{ token, user, isAuth: !!token, logIn, logOut }}
+    >
       {children}
     </AuthContext.Provider>
   );
 };
 
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = () => {
+  const ctx = useContext(AuthContext);
+  if (!ctx) throw new Error("Use Auth does not exist");
+  return ctx;
+};
