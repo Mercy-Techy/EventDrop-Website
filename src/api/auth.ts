@@ -1,4 +1,4 @@
-import api from "./axios";
+import { api } from "./axios";
 export interface CustomError {
   response?: {
     data: { message: string };

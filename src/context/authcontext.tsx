@@ -6,6 +6,7 @@ interface AuthContextType {
   isAuth: boolean;
   logIn: (userDetails: any, token: string) => void;
   logOut: () => void;
+  updateToken: (newToken: string) => void;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -29,10 +30,14 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
   };
+  const updateToken = (newToken: string) => {
+    setToken(newToken);
+    localStorage.setItem("token", newToken);
+  };
 
   return (
     <AuthContext.Provider
-      value={{ token, user, isAuth: !!token, logIn, logOut }}
+      value={{ token, user, isAuth: !!token, logIn, logOut, updateToken }}
     >
       {children}
     </AuthContext.Provider>

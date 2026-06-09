@@ -7,10 +7,12 @@ import { IoClose } from "react-icons/io5";
 import { useState } from "react";
 import { IoIosLogOut } from "react-icons/io";
 import { useAuth } from "../context/authcontext";
+import { useNavigate } from "react-router";
 
 const SideBar = () => {
   const [show, setShow] = useState(false);
   const { logOut } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -57,7 +59,10 @@ const SideBar = () => {
         </div>
 
         <ul className="mt-10">
-          <li className="flex items-center gap-3 cursor-pointer px-5 py-4 rounded-lg hover:bg-neutral-800">
+          <li
+            onClick={() => navigate("/dashboard")}
+            className="flex items-center gap-3 cursor-pointer px-5 py-4 rounded-lg hover:bg-neutral-800"
+          >
             <SlEvent className="text-white" />
             <div>Events</div>
           </li>
